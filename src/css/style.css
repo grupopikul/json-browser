@@ -40,6 +40,13 @@ body, html {
   height: 3vh;
   margin-left: 5px;
 }
+.one-value {
+  width: 98vw;
+  margin: 1vw;
+  text-align: center;
+  font-size: 200px;
+  border: 1px dotted black;
+}
 
 #current-object, #current-namespace {
   font-weight: bold;

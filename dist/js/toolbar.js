@@ -60,6 +60,7 @@ function loadObjectFromSelect() {
     const obj = objs[currentObject];
     document.getElementById("current-object").innerHTML = obj.filename;
     updateNamespaceFromObject(obj);
+    obj.rerender();
 }
 //// NAME SPACE STUFF
 // Sets namespace of object and indicator when button is clicked to do so (or when new object is uploaded and needs namespace)

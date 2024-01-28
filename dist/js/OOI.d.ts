@@ -6,6 +6,7 @@ export default class OOI {
     };
     privateNamespace: string;
     constructor(fileName: string, json: string, privateNamespace: string);
+    rerender(): void;
     checkLiteral(obj: any): string | null;
     parseObject(obj: Object, container: HTMLElement, title?: string): void;
     newId(): string;

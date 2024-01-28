@@ -4,7 +4,7 @@
         /* Language and Environment */
         /* Specify what module code is generated. */
         "module":"es6",
-        "target":"es2015",
+        "target":"es2015", // BUG TODO: you have to use this if you want to extend dom elements with typescript
         /* Specify how TypeScript looks up a file from a given module specifier. */
         //"moduleResolution": "node16",
         /* Create source map files for emitted JavaScript files. */

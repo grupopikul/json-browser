@@ -27,6 +27,19 @@ export default class OOI {
             this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement);
         }
     }
+    rerender(): void {
+        if(this.object instanceof Error) {
+            dom.oneValue(String(this.object), "20px");
+            return
+        }
+        const maybeLiteral: string | null = this.checkLiteral(this.object);
+        if(maybeLiteral) dom.oneValue(maybeLiteral, "200px");
+        else {
+            dom.clearTree();
+            this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement);
+        }
+    }
+
     checkLiteral(obj: any): string | null {
          if (obj === null) {
             return "null";

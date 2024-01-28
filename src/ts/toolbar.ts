@@ -71,6 +71,7 @@ function loadObjectFromSelect() {
     const obj = objs[currentObject];
     document.getElementById("current-object")!.innerHTML=obj.filename;
     updateNamespaceFromObject(obj);
+    obj.rerender();
 }
 
 //// NAME SPACE STUFF

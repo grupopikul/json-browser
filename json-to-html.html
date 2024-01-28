@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel=stylesheet href="./style.css"></link>
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <div class="root node-container">
+      <div class="node" id="0">
+        <div class=description>0</div>
+        <div class="node-container">
+          <div class="node" id="1">
+            <div class=description>1</div>
+            <div class="node-container">
+              <div class="node" id="2">
+                <div class=description>2</div>
+                <div class="node-container"></div>
+              </div>
+              <div class="node" id="3">
+                <div class=description>3</div>
+                <div class="node-container"></div>
+              </div>
+            </div>
+          </div>
+          <div class="node" id="4">
+            <div class=description>4</div>
+            <div class="node-container"></div>
+          </div>
+        </div>
+      </div>
+      <div class="node" id="5">
+        <div class=description>5</div>
+        <div class="node-container"></div>
+      </div>
+      <div id="toolbar">
+        Fix Description Width: <input type=text size=3 id="fixwidth" /> <button onclick="fixWidth(true)">Fix Width</button>
+        <button onclick="fixWidth(false)">Unfix width</button>
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,8 +1,13 @@
-Separate it into another package, probably
-Start it up with typescript
-Clean up the javascript a little bit (make it javascript)
-Make it so you can upload JSON files
 Have it parse the JSON file and generate the HTML for it
+
+So if it were objects and literals, every object would be a new node, with it's name being the key.
+But there's arrays, how do we handle them.
+If it's an array of literals, it becomes a property.
+If it's an array of objects, they all become nodes of a node named the array.
+If it's mixed, the literals become properties and the objects become nodes and mixed arrays/arrays of objects become nodes.
+
+
+
 
 Begin adding internal namespace elements to the json that aren't rendered
 Be able to traverse everything- so ids, ids, dis

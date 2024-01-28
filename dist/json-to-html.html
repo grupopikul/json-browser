@@ -1,40 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
   <head>
-    <link rel=stylesheet href="./style.css"></link>
-    <script src="./main.js"></script>
+    <link rel=stylesheet href="css/style.css"></link>
+    <script src="js/main.js"></script>
   </head>
   <body>
     <div class="root node-container">
-      <div class="node" id="0">
-        <div class=description>0</div>
-        <div class="node-container">
-          <div class="node" id="1">
-            <div class=description>1</div>
-            <div class="node-container">
-              <div class="node" id="2">
-                <div class=description>2</div>
-                <div class="node-container"></div>
-              </div>
-              <div class="node" id="3">
-                <div class=description>3</div>
-                <div class="node-container"></div>
-              </div>
-            </div>
-          </div>
-          <div class="node" id="4">
-            <div class=description>4</div>
-            <div class="node-container"></div>
-          </div>
-        </div>
-      </div>
-      <div class="node" id="5">
-        <div class=description>5</div>
-        <div class="node-container"></div>
-      </div>
       <div id="toolbar">
-        Fix Description Width: <input type=text size=3 id="fixwidth" /> <button onclick="fixWidth(true)">Fix Width</button>
+        Fix Description Width: <input type=text size=3 id="fixwidth" value="150" /> <button onclick="fixWidth(true)">Fix Width</button>
         <button onclick="fixWidth(false)">Unfix width</button>
+        | Pick (or drag) a JSON: <input type="file" id="file-selector" accept=".json">
+        | Namespace: <input type=text size=5 id="namespace" onkeyup="updateNamespace(event)" onpaste="updateNamespace(event)" oninput="updateNamespace(event)" onchange="updateNamespace(event)"/>: "_<span id="namespace-preview"></span>
+        <button onclick="renderNamespace(event, null)">Set</button>
+        | Object:
+        | Schema: JSON <button onclick="rerender(event)">Rerender</button>
       </div>
     </div>
   </body>

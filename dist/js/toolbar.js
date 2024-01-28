@@ -1,56 +1,95 @@
 import OOI from "./OOI.js"; // I wonder what it's actually loading ?
-var objs = [];
+const objs = [];
 var currentObject = -1;
-// Dom needs to be a class
-// Could be better organized by button TODO
-// TODO: what do we do when we ant to select object? Not just add object to select
-// More logic for setting namespace TODO (if we change it, change all namespace in object)
+var currentNamespace = "_"; // doesn't always work on refresh
+// Switch needs to actually switch
+// Need to deal with arrays
+// Need to be able to switch between existing objects
+// Does current Namespace always equal what's in the object? (set and load object)
 // Need save object
-// Need load schemas
 // Rerender doesn't work
-// loadObject is called once a file has been read and new OOI is created
-function loadObject(obj) {
-    currentObject = objs.length;
-    objs.push(obj);
-    updateNamespace(null, obj);
-    document.getElementById("current-object").innerHTML = obj.filename;
-    updateSelect(obj.filename, currentObject);
-}
-// Update select adds new object to select box
-function updateSelect(name, value) {
-    var box = document.getElementById("select-object");
-    box.add(new Option(name, String(value), true, true));
-}
-// the main runs this to add events all toolbar buttons
+// Need load schemas
+// TODO: organize by button! same as file!
 export function populateToolbar() {
-    var fileSelector = document.getElementById('file-selector');
-    fileSelector.addEventListener('change', uploadPickerHandler);
-    var HTML = document.documentElement;
-    HTML.addEventListener('dragenter', function () { return document.documentElement.style.opacity = '.2'; });
-    HTML.addEventListener('dragleave', function () { return document.documentElement.style.opacity = '1'; });
-    HTML.addEventListener('drop', dropHandler);
-    HTML.addEventListener('dragover', dragOverHandler);
-    document.getElementById('fix-width').addEventListener("click", function () { fixWidth(true); });
-    document.getElementById('unfix-width').addEventListener("click", function () { fixWidth(false); });
-    var ns_box = document.getElementById("namespace-input");
+    // SELECT OBJECT STUFF
+    document.getElementById("current-object").innerHTML = "None";
+    currentObject = -1;
+    const objectSelector = document.getElementById("select-object");
+    objectSelector.addEventListener("change", loadObjectFromSelect);
+    // NAMESPACE STUFF
+    document.getElementById('update-namespace').addEventListener("click", updateNamespace);
+    const ns_box = document.getElementById("namespace-input");
     ns_box.addEventListener('keyup', previewNamespace);
     ns_box.addEventListener('paste', previewNamespace);
     ns_box.addEventListener('input', previewNamespace);
     ns_box.addEventListener('change', previewNamespace);
-    document.getElementById('update-namespace').addEventListener("click", function (event) { updateNamespace(event, null); });
     previewNamespace(null);
+    currentNamespace = "_";
+    document.getElementById("current-namespace").innerHTML = currentNamespace;
+    const fileSelector = document.getElementById('file-selector');
+    fileSelector.addEventListener('change', uploadPickerHandler);
+    const HTML = document.documentElement;
+    HTML.addEventListener('dragenter', () => document.documentElement.style.opacity = '.2');
+    HTML.addEventListener('dragleave', () => document.documentElement.style.opacity = '1');
+    HTML.addEventListener('drop', dropHandler);
+    HTML.addEventListener('dragover', dragOverHandler);
+    document.getElementById('fix-width').addEventListener("click", () => { fixWidth(true); });
+    document.getElementById('unfix-width').addEventListener("click", () => { fixWidth(false); });
     // | Object: // change current object, change namespace, change current object in text and actual
     // | Schema: JSON <button id="rerender">Rerender</button>
     // | Current Namespace: <span id="current-namespace"></span> Current Object: <span id="current-object"></span>
 }
+////////// SELECT OBJECT STUFF
+// Update select adds new object to select box
+function updateSelect(name, value) {
+    const box = document.getElementById("select-object");
+    box.add(new Option(name, String(value), true, true));
+}
+// loadObjectFromFile is called once a file has been read and new OOI is created
+function loadObjectFromFile(obj) {
+    currentObject = objs.length;
+    objs.push(obj);
+    document.getElementById("current-object").innerHTML = obj.filename;
+    updateSelect(obj.filename, currentObject);
+    updateNamespaceFromObject(obj);
+}
+//loadObjectFromSelect is called if we're just switching
+function loadObjectFromSelect() {
+    const box = document.getElementById("select-object");
+    currentObject = +box.value;
+    const obj = objs[currentObject];
+    document.getElementById("current-object").innerHTML = obj.filename;
+    updateNamespaceFromObject(obj);
+}
+//// NAME SPACE STUFF
+// Sets namespace of object and indicator when button is clicked to do so (or when new object is uploaded and needs namespace)
+function updateNamespace(e) {
+    const input = document.getElementById("namespace-input");
+    const value = "_" + input.value;
+    currentNamespace = value;
+    document.getElementById("current-namespace").innerHTML = value;
+    if (currentObject >= 0)
+        objs[currentObject].updateNamespace(value);
+}
+function updateNamespaceFromObject(obj) {
+    currentNamespace = obj.privateNamespace;
+    document.getElementById("current-namespace").innerHTML = obj.privateNamespace;
+}
+// Updates the preview button
+function previewNamespace(e) {
+    const input = document.getElementById("namespace-input");
+    const value = input.value;
+    const output = document.getElementById("namespace-preview");
+    output.innerHTML = value;
+}
 // sets all columns to a fixed width, despite text (or undos if false)
 function fixWidth(on) {
-    var style = document.styleSheets[0].cssRules || document.styleSheets[0].rules;
+    const style = document.styleSheets[0].cssRules || document.styleSheets[0].rules;
     var size = document.getElementById("fix-width-input").value;
     if (!size)
         return;
     for (var i = 0; i < style.length; i++) {
-        var currentStyle = style[i];
+        let currentStyle = style[i];
         if (currentStyle instanceof CSSStyleRule && currentStyle.selectorText == '.description') {
             size = on ? size + 'px' : "auto";
             currentStyle.style['width'] = size;
@@ -58,23 +97,8 @@ function fixWidth(on) {
         }
     }
 }
-// Updates the preview button
-function previewNamespace(e) {
-    var input = document.getElementById("namespace-input");
-    var value = input.value;
-    var output = document.getElementById("namespace-preview");
-    output.innerHTML = value;
-}
-// Sets namespace of object and indicator when button is clicked to do so (or when new object is uploaded and needs namespace)
-function updateNamespace(e, obj) {
-    var input = document.getElementById("namespace-input");
-    var value = "_" + input.value;
-    if (obj !== null)
-        obj.updateNamespace(value);
-    document.getElementById("current-namespace").innerHTML = value;
-}
 function uploadPickerHandler(e) {
-    var fileList = e.target.files;
+    const fileList = e.target.files;
     if (fileList && fileList.length != 0) {
         processFile(fileList[0]);
     }
@@ -85,16 +109,16 @@ function dropHandler(e) {
         return;
     e.preventDefault();
     if (e.dataTransfer.items) {
-        var item = e.dataTransfer.items[0];
+        const item = e.dataTransfer.items[0];
         if (item.kind === "file") {
-            var file = item.getAsFile();
+            const file = item.getAsFile();
             if (file)
                 processFile(file);
             return;
         }
     }
     else {
-        var file = e.dataTransfer.files[0]; // # Now we have a file
+        const file = e.dataTransfer.files[0]; // # Now we have a file
         if (file)
             processFile(file);
         return;
@@ -104,12 +128,14 @@ function dragOverHandler(e) {
     e.preventDefault();
 }
 function processFile(file) {
-    var reader = new FileReader();
-    reader.addEventListener('load', function (e) {
-        var result = e.target.result;
+    const reader = new FileReader();
+    reader.addEventListener('load', (e) => {
+        const result = e.target.result;
         if (!(typeof result === 'string'))
             return;
-        loadObject(new OOI(file.name, result));
+        // Not great but allows us to change namespace before loading
+        const output = document.getElementById("namespace-preview").innerHTML;
+        loadObjectFromFile(new OOI(file.name, result, output));
     });
     reader.readAsText(file);
 }

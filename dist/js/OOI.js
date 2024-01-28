@@ -1,11 +1,11 @@
 import * as dom from "./dom.js";
-var OOI = /** @class */ (function () {
-    function OOI(fileName, json) {
+export default class OOI {
+    constructor(fileName, json, privateNamespace) {
         this.nodeIdList = {}; // GET RID OF LATER
-        this.privateNamespace = ""; // GET RID OF LATER
         this.filename = fileName;
+        this.privateNamespace = privateNamespace;
         if (json.length == 0) {
-            this.object = {};
+            this.object = "empty file";
         }
         else {
             try {
@@ -17,13 +17,15 @@ var OOI = /** @class */ (function () {
                 return;
             }
         }
-        var maybeLiteral = this.checkLiteral(this.object);
+        const maybeLiteral = this.checkLiteral(this.object);
         if (maybeLiteral)
             dom.oneValue(maybeLiteral, "200px");
-        else
+        else {
+            dom.clearTree();
             this.parseObject(this.object, document.getElementsByClassName("root")[0]);
+        }
     }
-    OOI.prototype.checkLiteral = function (obj) {
+    checkLiteral(obj) {
         if (obj === null) {
             return "null";
         }
@@ -39,41 +41,48 @@ var OOI = /** @class */ (function () {
         else if (typeof obj === "string") {
             return obj;
         }
+        else if (obj.length === 0) {
+            return "[]";
+        }
+        else if (Object.keys(obj).length === 0) {
+            return "{}";
+        }
         else {
             return null;
         }
-    };
+    }
     // Create three parse functions, parseObject, parseArray, parseLiterally
-    OOI.prototype.parseObject = function (obj, container, title) {
-        var newNode = dom.createNode(this.newId());
+    parseObject(obj, container, title) {
+        const newNode = new dom.NodeElement(this.newId());
         this.nodeIdList[newNode.id] = newNode;
-        dom.addNodeToContainer(container, newNode);
+        newNode.addNodeToContainer(container);
         if (title)
-            dom.addTitleToNode(newNode, title);
+            newNode.addTitleToNode(title);
         // This loop is only for key-value pairs, we don't support arrays yet
-        for (var property in obj) {
-            var value = obj[property];
-            var maybeLiteral = this.checkLiteral(value);
+        for (const property in obj) {
+            const value = obj[property];
+            const maybeLiteral = this.checkLiteral(value);
             if (maybeLiteral) {
-                dom.addPropertyToNode(newNode, property, value);
+                newNode.addPropertyToNode(property, value);
             }
             else { // this ignores that the object should know its key
-                this.parseObject(value, dom.getContainerFromNode(newNode), property);
+                this.parseObject(value, newNode.getContainerFromNode(), property);
             }
         }
-    };
-    OOI.prototype.newId = function () {
+    }
+    newId() {
         var id = crypto.randomUUID().split('-')[0];
         while (this.nodeIdList[id] !== undefined) {
             id = crypto.randomUUID().split('-')[0];
         }
         return id;
-    };
-    OOI.prototype.updateNamespace = function (namespace) {
-        var oldnamespace = this.privateNamespace;
+    }
+    updateNamespace(namespace) {
+        const oldnamespace = this.privateNamespace;
         this.privateNamespace = namespace;
-    };
-    return OOI;
-}());
-export default OOI;
+        // TODO: gotta go through our object and make the change
+        // Then we do a rerender
+        console.log(this.privateNamespace);
+    }
+}
 //# sourceMappingURL=OOI.js.map

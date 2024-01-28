@@ -1,8 +1,8 @@
 import * as toolbar from "./toolbar.js";
 import * as dom from "./dom.js";
-window.onload = function () {
+window.onload = () => {
     // Add main interface
-    var el = document.querySelector(".root");
+    const el = document.querySelector(".root");
     //el.oncontextmenu = addNodeFromEvent;
     el.onclick = dom.toggleVis;
     toolbar.populateToolbar();

@@ -1,7 +1,7 @@
 // NODE FUNCTIONS
-// TODO make this a class
+// UTILITY FUNCTIONS FOR EVENTS
 function getNearestNodeElement(e) {
-    var target = e.target instanceof HTMLElement ? e.target : null;
+    let target = e.target instanceof HTMLElement ? e.target : null;
     if (!target || target.classList === undefined)
         return null;
     while (!target.classList.contains("node")) {
@@ -14,85 +14,96 @@ function getNearestNodeElement(e) {
     }
     return target;
 }
-function closeNode(node) {
-    var container = node.querySelector(".node-container");
-    container.style.display = "none";
-    node.classList.add("closed");
-}
 export function toggleVis(e) {
-    var target = getNearestNodeElement(e);
+    const target = getNearestNodeElement(e);
     if (!target)
         return true;
-    var container = target.querySelector(".node-container");
+    const container = target.querySelector(".node-container");
+    const description = target.querySelector(".description");
     if (container.style.display == "none") {
         container.style.display = "flex";
+        description.style.display = "table";
     }
     else {
         container.style.display = "none";
+        description.style.display = "none";
     }
     target.classList.toggle("closed");
     e.stopPropagation();
     return false;
 }
-export function createNode(id) {
-    var node = document.createElement("div");
-    var description = document.createElement("table");
-    var container = document.createElement("div");
-    node.className = "node";
-    node.id = id;
-    node.title = "id: " + id;
-    description.className = "description";
-    container.className = "node-container";
-    node.appendChild(description);
-    node.appendChild(container);
-    return node;
+export class NodeElement extends HTMLElement {
+    constructor(id) {
+        super();
+        const description = document.createElement("table");
+        const container = document.createElement("div");
+        this.className = "node";
+        this.id = id;
+        this.title = "id: " + id;
+        description.className = "description";
+        container.className = "node-container";
+        this.appendChild(description);
+        this.appendChild(container);
+    }
+    closeNode() {
+        let container = this.querySelector(".node-container");
+        let description = this.querySelector(".description");
+        container.style.display = "none";
+        description.style.display = "none";
+        this.classList.add("closed");
+    }
+    getContainerFromNode() {
+        return this.querySelector(".node-container");
+    }
+    addNodeToContainer(container) {
+        if (container.classList.contains("root")) {
+            container.insertBefore(this, document.getElementById("toolbar"));
+            return;
+        }
+        container.appendChild(this);
+    }
+    addPropertyToNode(key, value) {
+        const description = this.querySelector('.description');
+        const row = document.createElement("tr");
+        const col1 = document.createElement("td");
+        col1.innerHTML = key + ":";
+        col1.style.textAlign = "right";
+        col1.style.width = "50%";
+        const col2 = document.createElement("td");
+        col2.innerHTML = value;
+        col2.style.textAlign = "left";
+        row.appendChild(col1);
+        row.appendChild(col2);
+        description.appendChild(row);
+    }
+    addTitleToNode(title) {
+        const titleEl = document.createElement("div");
+        titleEl.innerHTML = title;
+        titleEl.className = "title";
+        this.insertBefore(titleEl, this.querySelector('.description'));
+    }
 }
+window.customElements.define('node-element', NodeElement);
+// This is a fake node:
+// for the case where the json input is a single value
+// number.json: 3
+// string.json: "hello world"
 function createNodeSingleValue(value) {
-    var node = document.createElement("div");
+    const node = new NodeElement(value);
     node.className = "one-value";
     node.innerHTML = value;
     return node;
 }
-export function getContainerFromNode(node) {
-    return node.querySelector(".node-container");
-}
-export function addNodeToContainer(container, node) {
-    if (container.classList.contains("root")) {
-        container.insertBefore(node, document.getElementById("toolbar"));
-        return;
-    }
-    container.appendChild(node);
-}
-export function addPropertyToNode(node, key, value) {
-    var description = node.querySelector('.description');
-    var row = document.createElement("tr");
-    var col1 = document.createElement("td");
-    col1.innerHTML = key + ":";
-    col1.style.textAlign = "right";
-    col1.style.width = "50%";
-    var col2 = document.createElement("td");
-    col2.innerHTML = value;
-    col2.style.textAlign = "left";
-    row.appendChild(col1);
-    row.appendChild(col2);
-    description.appendChild(row);
-}
-export function addTitleToNode(node, title) {
-    var titleEl = document.createElement("div");
-    titleEl.innerHTML = title;
-    titleEl.className = "title";
-    node.insertBefore(titleEl, node.querySelector('.description'));
-}
 export function oneValue(value, size) {
     clearTree();
-    var root = document.getElementsByClassName("root")[0];
-    var newNode = createNodeSingleValue(value);
+    const root = document.getElementsByClassName("root")[0];
+    const newNode = createNodeSingleValue(value);
     newNode.style.fontSize = size;
-    addNodeToContainer(root, newNode);
+    newNode.addNodeToContainer(root);
 }
 export function clearTree() {
-    var root = document.getElementsByClassName("root")[0];
-    var toolbar = document.getElementById("toolbar");
+    const root = document.getElementsByClassName("root")[0];
+    const toolbar = document.getElementById("toolbar");
     root.innerHTML = "";
     root.appendChild(toolbar);
 }

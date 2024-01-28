@@ -1,0 +1,13 @@
+export default class OOI {
+    filename: string;
+    object: Object;
+    nodeIdList: {
+        [key: string]: HTMLElement;
+    };
+    privateNamespace: string;
+    constructor(fileName: string, json: string, privateNamespace: string);
+    checkLiteral(obj: any): string | null;
+    parseObject(obj: Object, container: HTMLElement, title?: string): void;
+    newId(): string;
+    updateNamespace(namespace: string): void;
+}

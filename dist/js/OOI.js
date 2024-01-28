@@ -54,15 +54,13 @@ export default class OOI {
         else if (typeof obj === "string") {
             return obj;
         }
-        else if (obj.length === 0) {
-            return "[]";
-        }
-        else if (Object.keys(obj).length === 0) {
-            return "{}";
-        }
         else {
             return null;
         }
+    }
+    isArray(obj) {
+        if (Array.isArray(obj))
+            return true;
     }
     // Create three parse functions, parseObject, parseArray, parseLiterally
     parseObject(obj, container, title) {

@@ -1,8 +1,13 @@
-{"title": "greetings",
+{
+    "title": "greetings",
+    "friends": [],
+    "objects": [{}, {"things": { "hello": true, "goodbye": false}}, {}],
+    "languages": [ "english", "spanish", "french" ],
     "english": { "hello": true, "goodbye": false},
     "spanish": {
         "colombia": { "hello": "Qué más?", "goodbye": "Chao" } ,
-        "mexico":   { "hello": "Hola", "goodbye": "bye" }
+        "mexico":   { "hello": "Hola", "goodbye": "bye" },
+        "spain": {}
     },
     "french":  { "hello": "salud", "goodbye": "bon soir" }
 }

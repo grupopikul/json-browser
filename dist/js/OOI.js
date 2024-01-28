@@ -77,7 +77,8 @@ export default class OOI {
                 newNode.addPropertyToNode(property, value);
             }
             else { // this ignores that the object should know its key
-                this.parseObject(value, newNode.getContainerFromNode(), property);
+                const newTitle = this.isArray(value) ? property + "[]" : property;
+                this.parseObject(value, newNode.getContainerFromNode(), newTitle);
             }
         }
     }

@@ -9,3 +9,10 @@ Be able to traverse everything- so ids, ids, dis
 Set up index's by arbitrary atributes (so a hash to all possible objects)
 Start trasversal on arbitrary objects
 Take notes on object
+
+
+# About module resolution
+
+You're going to use some system to find files that aren't the file you're in. How?
+
+First, require and ESM are different have have some standards about relative files vs "look in \node_modules"

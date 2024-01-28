@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+
+        /* Language and Environment */
+        /* Specify what module code is generated. */
+        "module": "es6",
+            /* Specify how TypeScript looks up a file from a given module specifier. */
+            //"moduleResolution": "node16",
+            /* Create source map files for emitted JavaScript files. */
+            "sourceMap": true,
+            /* Specify an output folder for all emitted files. */
+            "outDir": "./dist/js",
+            /* Specify the root path for debuggers to find the reference source code. */
+            "sourceRoot": "./src/ts",
+            /* Specify the location where debugger should locate map files instead of generated locations. */
+            //"mapRoot": "./maps/",
+            /* Emit additional JavaScript to ease support for importing CommonJS modules.
+            * This enables 'allowSyntheticDefaultImports' for type compatibility. */
+            // "esModuleInterop": true,
+            /* Ensure that casing is correct in imports. */
+            "forceConsistentCasingInFileNames": true,
+
+            /* Type Checking */
+            /* Enable all strict type-checking options. */
+            "strict": true,
+            /* Skip type checking all .d.ts files. */
+            "skipLibCheck": true,
+            "baseUrl": "."
+            //"paths": {
+            //"/ts/*": ["./src/*"]
+            //}
+    }
+}

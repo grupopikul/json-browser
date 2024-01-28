@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
   <head>
-    <link rel=stylesheet href="css/style.css"></link>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" type="module"></script>
+    <link rel=stylesheet href="css/style.css" />
   </head>
   <body>
     <div class="root node-container">
       <div id="toolbar">
-        Fix Description Width: <input type=text size=3 id="fixwidth" value="150" /> <button onclick="fixWidth(true)">Fix Width</button>
-        <button onclick="fixWidth(false)">Unfix width</button>
-        | Pick (or drag) a JSON: <input type="file" id="file-selector" accept=".json">
-        | Namespace: <input type=text size=5 id="namespace" onkeyup="updateNamespace(event)" onpaste="updateNamespace(event)" oninput="updateNamespace(event)" onchange="updateNamespace(event)"/>: "_<span id="namespace-preview"></span>
-        <button onclick="renderNamespace(event, null)">Set</button>
-        | Object:
-        | Schema: JSON <button onclick="rerender(event)">Rerender</button>
+        Current Object: <span id="current-object">None</span> Current Namespace: <span id="current-namespace">None</span>
+        <br />
+        Fix Description Width:
+        <input type=text size=3 id="fix-width-input" value="150" />
+        <button id="fix-width">Fix Width</button>
+        <button id="unfix-width">Unfix width</button>
+        | Pick (or drag) a JSON: <input type="file" id="file-selector" accept=".json" style="width: 70px">
+        | Namespace: <input type=text size=5 id="namespace-input" />: "_<span id="namespace-preview"></span>"
+        <button id="update-namespace">Set</button>
+        | Object: <select id="select-object" style="width: 70px"></select>
+        | Schema: JSON <button id="rerender">Rerender</button>
       </div>
     </div>
   </body>

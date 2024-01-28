@@ -1,25 +1,11 @@
-"use strict";
+import * as toolbar from "./toolbar.js";
 window.onload = function () {
+    // Add main interface
     var el = document.querySelector(".root");
-    el.oncontextmenu = addNodeFromEvent;
-    el.onclick = toggleVis;
-    var fileSelector = document.getElementById('file-selector');
-    fileSelector.addEventListener('change', function (event) {
-        var fileList = event.target.files;
-        if (fileList && fileList.length != 0) {
-            processFile(fileList[0]);
-        }
-        return;
-    });
-    updateNamespace(null);
+    //el.oncontextmenu = addNodeFromEvent;
+    //el.onclick = toggleVis;
+    toolbar.populateToolbar();
 };
-// *Globals
-var objs = [];
-var currentObject = -1;
-function loadObject(obj) {
-    currentObject = objs.length;
-    objs.push(obj);
-}
 /*
     crypto.randomUUID().split('-')[0];
     if(currentObject >= 0) {

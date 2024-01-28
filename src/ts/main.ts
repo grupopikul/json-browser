@@ -1,33 +1,12 @@
+import * as toolbar from "./toolbar.js";
+
 window.onload = () => {
+    // Add main interface
     const el: HTMLElement = document.querySelector(".root")!;
-    el.oncontextmenu = addNodeFromEvent;
-    el.onclick = toggleVis;
-
-    const fileSelector: HTMLInputElement = document.getElementById('file-selector') as HTMLInputElement;
-    fileSelector.addEventListener('change', (event: Event) => {
-        const fileList = (event.target as HTMLInputElement).files;
-        if (fileList && fileList.length != 0) {
-            processFile(fileList[0]);
-        }
-        return;
-    });
-
-    updateNamespace(null);
+    //el.oncontextmenu = addNodeFromEvent;
+    //el.onclick = toggleVis;
+    toolbar.populateToolbar();
 };
-
-// *Globals
-const objs: OOI[] = [] as OOI[];
-var currentObject: number = -1;
-function loadObject(obj: OOI): void {
-    currentObject = objs.length;
-    objs.push(obj);
-}
-
-
-
-
-
-
 
 /*
     crypto.randomUUID().split('-')[0];

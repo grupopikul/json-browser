@@ -19,7 +19,8 @@ body, html {
   flex-direction: row; /* place description and node container in a row */
   flex: 1;
   background-color: white;
-  margin: .5em;
+  margin: 1.5em;
+  padding-top: 1em;
   border-radius: 1%;
   color: black;
   border: 1px solid black;
@@ -30,9 +31,8 @@ body, html {
 }
 
 .description { /* For centering text */
-  display: flex;
-  align-items: center;
-  padding: 1em;
+  display: table;
+  padding: .5em;
 }
 
 
@@ -50,4 +50,11 @@ body, html {
 
 #current-object, #current-namespace {
   font-weight: bold;
+}
+.title {
+  position: absolute;
+  margin-top: -1.7em;
+  margin-left: -.5em;
+  background-color: white;
+  border: 1px dotted black;
 }

@@ -3,7 +3,13 @@ import OOI from "./OOI.js"; // I wonder what it's actually loading ?
 const objs: OOI[] = [] as OOI[];
 var currentObject: number = -1;
 
+// Dom needs to be a class
 // Could be better organized by button TODO
+// TODO: what do we do when we ant to select object? Not just add object to select
+// More logic for setting namespace TODO (if we change it, change all namespace in object)
+// Need save object
+// Need load schemas
+// Rerender doesn't work
 
 
 // loadObject is called once a file has been read and new OOI is created
@@ -14,7 +20,6 @@ function loadObject(obj: OOI): void {
     document.getElementById("current-object")!.innerHTML=obj.filename;
     updateSelect(obj.filename, currentObject);
 }
-// TODO: what do we do when we ant to select object? Not just add object to select
 
 // Update select adds new object to select box
 function updateSelect(name: string, value: number) {

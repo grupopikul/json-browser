@@ -1,4 +1,7 @@
 // NODE FUNCTIONS
+
+
+// TODO make this a class
 function getNearestNodeElement(e: Event): HTMLElement | null {
     let target: HTMLElement | null = e.target instanceof HTMLElement ? e.target : null;
     if (!target || target.classList === undefined) return null;
@@ -11,12 +14,13 @@ function getNearestNodeElement(e: Event): HTMLElement | null {
     }
     return target;
 }
+
 function closeNode(node: HTMLElement): void {
     let container: HTMLElement = node.querySelector(".node-container")!;
     container.style.display = "none";
     node.classList.add("closed");
 }
-function toggleVis(e: Event): Boolean {
+export function toggleVis(e: Event): Boolean {
     const target = getNearestNodeElement(e);
     if(!target) return true;
     const container: HTMLElement = target.querySelector(".node-container")!;
@@ -29,28 +33,74 @@ function toggleVis(e: Event): Boolean {
     e.stopPropagation();
     return false;
 }
-function createNode(id: string) {
-    const node = document.createElement("div");
-    const description = document.createElement("div");
-    const container = document.createElement("div");
+export function createNode(id: string) {
+    const node: HTMLElement = document.createElement("div");
+    const description: HTMLElement = document.createElement("table");
+    const container: HTMLElement = document.createElement("div");
     node.className = "node";
     node.id = id;
+    node.title = "id: " + id;
     description.className = "description";
     container.className = "node-container";
-    var text = node.id;
-    description.innerHTML = text;
     node.appendChild(description);
     node.appendChild(container);
     return node;
 }
 
 function createNodeSingleValue(value: string) {
-    const node = document.createElement("div");
+    const node: HTMLElement = document.createElement("div");
     node.className = "one-value";
     node.innerHTML = value;
-    return node
+    return node;
 }
 
+export function getContainerFromNode(node: HTMLElement): HTMLElement {
+    return node.querySelector(".node-container") as HTMLElement;
+}
+export function addNodeToContainer(container: HTMLElement, node: HTMLElement): void {
+    if (container.classList.contains("root")) {
+        container.insertBefore(node, document.getElementById("toolbar")!);
+        return;
+    }
+    container.appendChild(node);
+}
+export function addPropertyToNode(node: HTMLElement, key: string, value: string) {
+    const description: HTMLElement = node.querySelector('.description')!;
+    const row: HTMLElement = document.createElement("tr");
+    const col1: HTMLElement = document.createElement("td");
+    col1.innerHTML = key + ":";
+    col1.style.textAlign = "right";
+    col1.style.width="50%";
+    const col2: HTMLElement = document.createElement("td");
+    col2.innerHTML = value;
+    col2.style.textAlign = "left";
+    row.appendChild(col1);
+    row.appendChild(col2);
+    description.appendChild(row);
+}
+
+export function addTitleToNode(node: HTMLElement, title: string) {
+    const titleEl = document.createElement("div");
+    titleEl.innerHTML = title;
+    titleEl.className = "title";
+    node.insertBefore(titleEl, node.querySelector('.description'));
+}
+export function oneValue(value: string, size: string) {
+    clearTree();
+    const root: HTMLElement = document.getElementsByClassName("root")[0] as HTMLElement;
+    const newNode: HTMLElement = createNodeSingleValue(value);
+    newNode.style.fontSize = size;
+    addNodeToContainer(root, newNode);
+}
+
+export function clearTree() {
+    const root: HTMLElement = document.getElementsByClassName("root")[0] as HTMLElement;
+    const toolbar: HTMLElement = document.getElementById("toolbar") as HTMLElement;
+    root.innerHTML = "";
+    root.appendChild(toolbar);
+}
+
+/* Old but I like the blinky
 function addNodeFromEvent(e: Event) {
     const target: HTMLElement | null = getNearestNodeElement(e);
     if(!target) return true;
@@ -66,28 +116,4 @@ function addNodeFromEvent(e: Event) {
     addNodeToContainer(parent, createNode("delete"));
     e.stopPropagation();
     return false;
-}
-
-function addNodeToContainer(container: HTMLElement, node: HTMLElement): void {
-    if (container.classList.contains("root")) {
-        container.insertBefore(node, document.getElementById("toolbar")!);
-        return;
-    }
-    container.appendChild(node);
-}
-
-export function oneValue(value: string, size?: string) {
-    const root: HTMLElement = document.getElementsByClassName("root")[0] as HTMLElement;
-    const newNode: HTMLElement = createNodeSingleValue(value);
-    if (size !== undefined) {
-        newNode.style.fontSize = size;
-    }
-    addNodeToContainer(root, newNode);
-}
-
-export function clearTree() {
-    const root: HTMLElement = document.getElementsByClassName("root")[0] as HTMLElement;
-    const toolbar: HTMLElement = document.getElementById("toolbar") as HTMLElement;
-    root.innerHTML = "";
-    root.appendChild(toolbar);
-}
+}*/

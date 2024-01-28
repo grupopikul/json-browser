@@ -1,1 +1,8 @@
-{"hello": true, "goodbye": false}
+{"title": "greetings",
+    "english": { "hello": true, "goodbye": false},
+    "spanish": {
+        "colombia": { "hello": "Qué más?", "goodbye": "Chao" } ,
+        "mexico":   { "hello": "Hola", "goodbye": "bye" }
+    },
+    "french":  { "hello": "salud", "goodbye": "bon soir" }
+}

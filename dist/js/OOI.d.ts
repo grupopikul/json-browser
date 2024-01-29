@@ -1,7 +1,9 @@
 import * as dom from "./dom.js";
 interface nodeTuple {
     element: dom.NodeElement;
-    object: Object;
+    object: {
+        [key: string]: any;
+    } | Array<any>;
 }
 interface nodeDictionary {
     [index: string]: nodeTuple;
@@ -15,7 +17,7 @@ export default class OOI {
     rerender(): void;
     checkLiteral(obj: any): string | null;
     isArray(obj: any): true | undefined;
-    parseObject(obj: Object, container: HTMLElement, title?: string): void;
+    parseObject(obj: any, container: HTMLElement, title?: string): void;
     newId(): string;
     updateNamespace(namespace: string): void;
 }

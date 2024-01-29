@@ -2,14 +2,14 @@ import * as dom from "./dom.js";
 
 interface nodeTuple {
     element: dom.NodeElement;
-    object: Object;
+    object: { [key: string]: any } | Array<any>;
 }
 interface nodeDictionary {
     [index: string]: nodeTuple;
 }
 export default class OOI {
     filename: string;
-    object: Object;
+    object: Object; // is Object same as any?
     nodeIdList: nodeDictionary = {}
     privateNamespace: string; // GET RID OF LATER
 
@@ -65,15 +65,18 @@ export default class OOI {
         if(Array.isArray(obj)) return true;
     }
     // Create three parse functions, parseObject, parseArray, parseLiterally
-    parseObject(obj: Object, container: HTMLElement, title?: string): void {
+    parseObject(obj: any, container: HTMLElement, title?: string): void {
+        // I choose to use any here because that is what JSON returns
+        // and I don't know what is coming in.
         const newNode: dom.NodeElement = new dom.NodeElement(this.newId());
         this.nodeIdList[newNode.id] = {"element": newNode, "object": obj};
-        if (obj) obj[(this.privateNamespace+"id")] = newNode.id; // why woudln't it be an object. if empty, i suppose
+
+        if (obj) obj[(this.privateNamespace+"_id")] = newNode.id;
         newNode.addNodeToContainer(container);
         if (title) newNode.addTitleToNode(title);
         // This loop is only for key-value pairs, we don't support arrays yet
         for (const property in obj) {
-            const value: any = obj[property as keyof typeof obj];
+            const value: any = obj[property];
             const maybeLiteral: string | null = this.checkLiteral(value);
             if(maybeLiteral) {
                 newNode.addPropertyToNode(property, value);

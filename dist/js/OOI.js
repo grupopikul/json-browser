@@ -64,10 +64,12 @@ export default class OOI {
     }
     // Create three parse functions, parseObject, parseArray, parseLiterally
     parseObject(obj, container, title) {
+        // I choose to use any here because that is what JSON returns
+        // and I don't know what is coming in.
         const newNode = new dom.NodeElement(this.newId());
         this.nodeIdList[newNode.id] = { "element": newNode, "object": obj };
         if (obj)
-            obj[(this.privateNamespace + "id")] = newNode.id; // why woudln't it be an object. if empty, i suppose
+            obj[(this.privateNamespace + "_id")] = newNode.id;
         newNode.addNodeToContainer(container);
         if (title)
             newNode.addTitleToNode(title);

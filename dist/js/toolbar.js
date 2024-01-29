@@ -2,6 +2,7 @@ import OOI from "./OOI.js"; // I wonder what it's actually loading ?
 const objs = [];
 var currentObject = -1;
 var currentNamespace = "_"; // doesn't always work on refresh
+window.objs = objs;
 // Switch needs to actually switch
 // Need to deal with arrays
 // Need to be able to switch between existing objects
@@ -135,7 +136,7 @@ function processFile(file) {
         if (!(typeof result === 'string'))
             return;
         // Not great but allows us to change namespace before loading
-        const output = document.getElementById("namespace-preview").innerHTML;
+        const output = "_" + document.getElementById("namespace-preview").innerHTML;
         loadObjectFromFile(new OOI(file.name, result, output));
     });
     reader.readAsText(file);

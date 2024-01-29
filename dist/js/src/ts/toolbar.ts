@@ -4,7 +4,7 @@ const objs: OOI[] = [] as OOI[];
 var currentObject: number = -1;
 var currentNamespace: string = "_"; // doesn't always work on refresh
 
-// DOM needs to be a class
+// Switch needs to actually switch
 // Need to deal with arrays
 // Need to be able to switch between existing objects
 // Does current Namespace always equal what's in the object? (set and load object)
@@ -71,6 +71,7 @@ function loadObjectFromSelect() {
     const obj = objs[currentObject];
     document.getElementById("current-object")!.innerHTML=obj.filename;
     updateNamespaceFromObject(obj);
+    obj.rerender();
 }
 
 //// NAME SPACE STUFF

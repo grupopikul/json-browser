@@ -1,7 +1,7 @@
 // NODE FUNCTIONS
 
  // UTILITY FUNCTIONS FOR EVENTS
-function getNearestNodeElement(e: Event): HTMLElement | null {
+function getNearestNodeElement(e: Event): NodeElement | null {
     let target: HTMLElement | null = e.target instanceof HTMLElement ? e.target : null;
     if (!target || target.classList === undefined) return null;
     while (!target.classList.contains("node")) {
@@ -11,22 +11,13 @@ function getNearestNodeElement(e: Event): HTMLElement | null {
         target = target.parentNode instanceof HTMLElement ? target.parentNode : null;
         if (!target || target.classList === undefined) return null;
     }
-    return target;
+    return target as NodeElement;
 }
 
 export function toggleVis(e: Event): Boolean {
-    const target: HTMLElement | null = getNearestNodeElement(e);
+    const target: NodeElement | null = getNearestNodeElement(e);
     if(!target) return true;
-    const container: HTMLElement = target.querySelector(".node-container")!;
-    const description: HTMLElement = target.querySelector(".description")!;
-    if (container.style.display == "none") {
-        container.style.display = "flex";
-        description.style.display = "table";
-    } else {
-        container.style.display = "none";
-        description.style.display = "none";
-    }
-    target.classList.toggle("closed");
+    target.toggleVis();
     e.stopPropagation();
     return false;
 }
@@ -56,7 +47,18 @@ export class NodeElement extends HTMLElement {
     getContainerFromNode(): HTMLElement {
         return this.querySelector(".node-container") as HTMLElement;
     }
-
+    toggleVis():void {
+        const container: HTMLElement = this.querySelector(".node-container")!;
+        const description: HTMLElement = this.querySelector(".description")!;
+        if (container.style.display == "none") {
+            container.style.display = "flex";
+            description.style.display = "table";
+        } else {
+            container.style.display = "none";
+            description.style.display = "none";
+        }
+        this.classList.toggle("closed");
+    }
     addNodeToContainer(container: HTMLElement): void {
         if (container.classList.contains("root")) {
             container.insertBefore(this, document.getElementById("toolbar")!);

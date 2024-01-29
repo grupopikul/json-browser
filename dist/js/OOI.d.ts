@@ -1,9 +1,15 @@
+import * as dom from "./dom.js";
+interface nodeTuple {
+    element: dom.NodeElement;
+    object: Object;
+}
+interface nodeDictionary {
+    [index: string]: nodeTuple;
+}
 export default class OOI {
     filename: string;
     object: Object;
-    nodeIdList: {
-        [key: string]: HTMLElement;
-    };
+    nodeIdList: nodeDictionary;
     privateNamespace: string;
     constructor(fileName: string, json: string, privateNamespace: string);
     rerender(): void;
@@ -13,3 +19,4 @@ export default class OOI {
     newId(): string;
     updateNamespace(namespace: string): void;
 }
+export {};

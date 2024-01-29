@@ -18,17 +18,7 @@ export function toggleVis(e) {
     const target = getNearestNodeElement(e);
     if (!target)
         return true;
-    const container = target.querySelector(".node-container");
-    const description = target.querySelector(".description");
-    if (container.style.display == "none") {
-        container.style.display = "flex";
-        description.style.display = "table";
-    }
-    else {
-        container.style.display = "none";
-        description.style.display = "none";
-    }
-    target.classList.toggle("closed");
+    target.toggleVis();
     e.stopPropagation();
     return false;
 }
@@ -54,6 +44,19 @@ export class NodeElement extends HTMLElement {
     }
     getContainerFromNode() {
         return this.querySelector(".node-container");
+    }
+    toggleVis() {
+        const container = this.querySelector(".node-container");
+        const description = this.querySelector(".description");
+        if (container.style.display == "none") {
+            container.style.display = "flex";
+            description.style.display = "table";
+        }
+        else {
+            container.style.display = "none";
+            description.style.display = "none";
+        }
+        this.classList.toggle("closed");
     }
     addNodeToContainer(container) {
         if (container.classList.contains("root")) {

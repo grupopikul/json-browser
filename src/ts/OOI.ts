@@ -1,9 +1,16 @@
 import * as dom from "./dom.js";
 
+interface nodeTuple {
+    element: dom.NodeElement;
+    object: Object;
+}
+interface nodeDictionary {
+    [index: string]: nodeTuple;
+}
 export default class OOI {
     filename: string;
     object: Object;
-    nodeIdList: { [key: string]: HTMLElement } = {}; // GET RID OF LATER
+    nodeIdList: nodeDictionary = {}
     privateNamespace: string; // GET RID OF LATER
 
     constructor(fileName: string, json: string, privateNamespace: string) {
@@ -60,7 +67,8 @@ export default class OOI {
     // Create three parse functions, parseObject, parseArray, parseLiterally
     parseObject(obj: Object, container: HTMLElement, title?: string): void {
         const newNode: dom.NodeElement = new dom.NodeElement(this.newId());
-        this.nodeIdList[newNode.id] = newNode;
+        this.nodeIdList[newNode.id] = {"element": newNode, "object": obj};
+        if (obj) obj[(this.privateNamespace+"id")] = newNode.id; // why woudln't it be an object. if empty, i suppose
         newNode.addNodeToContainer(container);
         if (title) newNode.addTitleToNode(title);
         // This loop is only for key-value pairs, we don't support arrays yet

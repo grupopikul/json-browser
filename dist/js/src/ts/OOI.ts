@@ -10,7 +10,7 @@ export default class OOI {
         this.filename = fileName;
         this.privateNamespace = privateNamespace;
         if (json.length == 0) {
-            this.object = {};
+            this.object = "empty file";
         } else {
             try {
                 this.object = JSON.parse(json);
@@ -27,6 +27,19 @@ export default class OOI {
             this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement);
         }
     }
+    rerender(): void {
+        if(this.object instanceof Error) {
+            dom.oneValue(String(this.object), "20px");
+            return
+        }
+        const maybeLiteral: string | null = this.checkLiteral(this.object);
+        if(maybeLiteral) dom.oneValue(maybeLiteral, "200px");
+        else {
+            dom.clearTree();
+            this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement);
+        }
+    }
+
     checkLiteral(obj: any): string | null {
          if (obj === null) {
             return "null";
@@ -37,11 +50,12 @@ export default class OOI {
             return obj.toString();
         } else if (typeof obj === "string" ) {
             return obj;
-        } else if (object.length === 0) {
-            return "{}";
         } else {
             return null;
         }
+    }
+    isArray(obj: any) {
+        if(Array.isArray(obj)) return true;
     }
     // Create three parse functions, parseObject, parseArray, parseLiterally
     parseObject(obj: Object, container: HTMLElement, title?: string): void {
@@ -56,7 +70,8 @@ export default class OOI {
             if(maybeLiteral) {
                 newNode.addPropertyToNode(property, value);
             } else { // this ignores that the object should know its key
-                this.parseObject(value, newNode.getContainerFromNode(), property);
+                const newTitle = this.isArray(value) ? property + "[]" : property;
+                this.parseObject(value, newNode.getContainerFromNode(), newTitle);
             }
 
         }

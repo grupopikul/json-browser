@@ -1,7 +1,7 @@
 import * as dom from "./dom.js";
 export default class OOI {
     constructor(fileName, json, privateNamespace) {
-        this.nodeIdList = {}; // GET RID OF LATER
+        this.nodeIdList = {};
         this.filename = fileName;
         this.privateNamespace = privateNamespace;
         if (json.length == 0) {
@@ -65,7 +65,9 @@ export default class OOI {
     // Create three parse functions, parseObject, parseArray, parseLiterally
     parseObject(obj, container, title) {
         const newNode = new dom.NodeElement(this.newId());
-        this.nodeIdList[newNode.id] = newNode;
+        this.nodeIdList[newNode.id] = { "element": newNode, "object": obj };
+        if (obj)
+            obj[(this.privateNamespace + "id")] = newNode.id; // why woudln't it be an object. if empty, i suppose
         newNode.addNodeToContainer(container);
         if (title)
             newNode.addTitleToNode(title);

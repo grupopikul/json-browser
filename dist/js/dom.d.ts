@@ -3,6 +3,7 @@ export declare class NodeElement extends HTMLElement {
     constructor(id: string);
     closeNode(): void;
     getContainerFromNode(): HTMLElement;
+    toggleVis(): void;
     addNodeToContainer(container: HTMLElement): void;
     addPropertyToNode(key: string, value: string): void;
     addTitleToNode(title: string): void;

@@ -45,3 +45,26 @@ countNames(array_of_names, filter)
 resolveNames(working directory, names) (names can be array or dictionary)
 
 MeasureTangledness
+
+
+
+1) Get a group of modules in a certain folder
+2) Get each modules list of dependants (as modules)
+3) Order by dependent
+4) Order who has the most dependants and their number
+5) Create unique list of dependents among all
+6) Eliminate intradependencies of that folder
+7) Look at it by group of different folds
+8) Do for specific players w/in that group
+9) Look for mutual dependencies
+
+1) Get a group of modules in a certain folder
+2) Get for each module a list of their dependencies
+3) Order by who has the most dependencies
+4) Create unique list of dependencies among all
+5) Eliminate intradependencies
+6) Look at dependencies by group of different folders
+
+1) Resolve particular file
+2) Count exports
+3) What does do certain dependents lean on

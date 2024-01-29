@@ -22,7 +22,7 @@ function get_tuple(index?: string): nodeTuple | null {
     }
     return get_obj().nodeIdList[index];
 }
-
+window.json_browser = new Object();
 window.json_browser.objects = objs;
 window.json_browser.currentIndex = currentObject;
 window.json_browser.get_obj = get_obj;

@@ -1,3 +1,5 @@
+Lets add a worker just for fun.
+Some kind of paging for array?
 Interests:
   Lots of things dependent on small amount of code with not much complexit
   What is the most dependend on?

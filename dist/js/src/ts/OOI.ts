@@ -1,9 +1,16 @@
 import * as dom from "./dom.js";
 
+export interface nodeTuple {
+    element: dom.NodeElement;
+    object: { [key: string]: any } | Array<any>;
+}
+interface nodeDictionary {
+    [index: string]: nodeTuple;
+}
 export default class OOI {
     filename: string;
-    object: Object;
-    nodeIdList: { [key: string]: HTMLElement } = {}; // GET RID OF LATER
+    object: Object; // is Object same as any?
+    nodeIdList: nodeDictionary = {}
     privateNamespace: string; // GET RID OF LATER
 
     constructor(fileName: string, json: string, privateNamespace: string) {
@@ -58,14 +65,18 @@ export default class OOI {
         if(Array.isArray(obj)) return true;
     }
     // Create three parse functions, parseObject, parseArray, parseLiterally
-    parseObject(obj: Object, container: HTMLElement, title?: string): void {
+    parseObject(obj: any, container: HTMLElement, title?: string): void {
+        // I choose to use any here because that is what JSON returns
+        // and I don't know what is coming in.
         const newNode: dom.NodeElement = new dom.NodeElement(this.newId());
-        this.nodeIdList[newNode.id] = newNode;
+        this.nodeIdList[newNode.id] = {"element": newNode, "object": obj};
+
+        if (obj) obj[(this.privateNamespace+"_id")] = newNode.id;
         newNode.addNodeToContainer(container);
         if (title) newNode.addTitleToNode(title);
         // This loop is only for key-value pairs, we don't support arrays yet
         for (const property in obj) {
-            const value: any = obj[property as keyof typeof obj];
+            const value: any = obj[property];
             const maybeLiteral: string | null = this.checkLiteral(value);
             if(maybeLiteral) {
                 newNode.addPropertyToNode(property, value);

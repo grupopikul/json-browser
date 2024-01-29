@@ -27,7 +27,7 @@ export class NodeElement extends HTMLElement {
         super();
         const description = document.createElement("table");
         const container = document.createElement("div");
-        this.className = "node";
+        this.className = "node closed";
         this.id = id;
         this.title = "id: " + id;
         description.className = "description";
@@ -48,7 +48,7 @@ export class NodeElement extends HTMLElement {
     toggleVis() {
         const container = this.querySelector(".node-container");
         const description = this.querySelector(".description");
-        if (container.style.display == "none") {
+        if (this.classList.contains("closed")) {
             container.style.display = "flex";
             description.style.display = "table";
         }

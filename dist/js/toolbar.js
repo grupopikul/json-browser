@@ -1,8 +1,24 @@
-import OOI from "./OOI.js"; // I wonder what it's actually loading ?
-const objs = [];
+import { default as OOI } from "./OOI.js"; // I wonder what it's actually loading ?
+const objs = []; // objects is a bad name for the whole file, which is made of objects
 var currentObject = -1;
 var currentNamespace = "_"; // doesn't always work on refresh
-window.objs = objs;
+function get_obj() {
+    return objs[currentObject];
+}
+function get_tuple(index) {
+    if (index === undefined) {
+        // return root
+        const root = document.getElementsByClassName('root')[0];
+        const rootNode = root.querySelector(".node");
+        if (!rootNode)
+            return null;
+        return get_tuple(rootNode.id);
+    }
+    return get_obj().nodeIdList[index];
+}
+window.json_browser.objects = objs;
+window.json_browser.currentIndex = currentObject;
+window.json_browser.get_obj = get_obj;
 // Switch needs to actually switch
 // Need to deal with arrays
 // Need to be able to switch between existing objects

@@ -1,9 +1,31 @@
-import OOI from "./OOI.js"; // I wonder what it's actually loading ?
+import { default as OOI, nodeTuple } from "./OOI.js"; // I wonder what it's actually loading ?
 
-const objs: OOI[] = [] as OOI[];
+const objs: OOI[] = [] as OOI[]; // objects is a bad name for the whole file, which is made of objects
 var currentObject: number = -1;
 var currentNamespace: string = "_"; // doesn't always work on refresh
-window.objs = objs;
+
+declare global {
+    interface Window { json_browser: any }
+}
+
+function get_obj(): OOI {
+    return objs[currentObject];
+}
+
+function get_tuple(index?: string): nodeTuple | null {
+    if (index === undefined) {
+        // return root
+        const root: HTMLElement = document.getElementsByClassName('root')[0] as HTMLElement;
+        const rootNode: HTMLElement | null = root.querySelector(".node");
+        if (!rootNode) return null;
+        return get_tuple(rootNode.id);
+    }
+    return get_obj().nodeIdList[index];
+}
+
+window.json_browser.objects = objs;
+window.json_browser.currentIndex = currentObject;
+window.json_browser.get_obj = get_obj;
 // Switch needs to actually switch
 // Need to deal with arrays
 // Need to be able to switch between existing objects

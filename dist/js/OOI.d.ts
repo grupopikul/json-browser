@@ -1,5 +1,5 @@
 import * as dom from "./dom.js";
-interface nodeTuple {
+export interface nodeTuple {
     element: dom.NodeElement;
     object: {
         [key: string]: any;

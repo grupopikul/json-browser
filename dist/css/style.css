@@ -12,7 +12,7 @@ body, html {
 }
 .root { /* overrides node container for first element */
   display: flex;
-  min-height: 97vh;
+  /*min-height: 97vh;*/
   margin-bottom: 30px;
 }
 

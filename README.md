@@ -1,72 +1,50 @@
-Lets add a worker just for fun.
-Some kind of paging for array?
-Interests:
-  Lots of things dependent on small amount of code with not much complexit
-  What is the most dependend on?
-  What depends on the most?
-  What has the most individual dependencies?
-  What has the most individual dependents?
+So since this is turning into a build system....
 
-So if it were objects and literals, every object would be a new node, with it's name being the key.
-But there's arrays, how do we handle them.
-If it's an array of literals, it becomes a property.
-If it's an array of objects, they all become nodes of a node named the array.
-If it's mixed, the literals become properties and the objects become nodes and mixed arrays/arrays of objects become nodes.
-Plotly refactor has some interesting material in it.
+## Concept
 
-TODO:
+1) [ ] Take entry files
+2) Move the AST
+3) Develop dependency tree
+4) Lint
+5) Mark files by year of javascript
+6) Mark files my module type
+7) Mark files if acceptable for web or not
+7) ANALYZE
+-- You can show a graph visualization here
+-- You should be able to run specific operations on graph filters/sections of graph
+-- Graph can probably be transformed based on directory structure/depth
+8) Transform type of javascript
+9) Transform type of import/export or bundle
 
-- Styling would be nice.
-- We need a function to easily get the root most node(s)
+## TODO
 
-For webpack stuff specifically... don't really understand the stats file... but ok...
+- [ ] fix build
+- [ ] fix source maps
+- [ ] better interface for webpack?
+- [ ] plotly (fix documentation on refactor)
+- [ ] Get cytoscape running with DAGRE
+- [ ] Get it into global
+- [ ] Let's redo the toolbar
+  - [ ] Let's get certain things split into modules
+  - [ ] Get it fixed and working
+  - [ ] Split it into modules
+  - [ ] Create tabs, yeah
+  - [ ] better defaults for namespaces
+- [ ] Let's keep going with webpack
+- [ ] Let's lint
+- [ ] Trees/Looping/Sorting (Graph should be tree)
+- [ ] Let's create that tree of all the files
+- [ ] Let's get it styled properly (color coded depth, shape based on type of import, name is folder)
+- [ ] Let's be able to aggregate statistics into folders (ie collapsable)
+- [ ] Let's get relationships shown on hover
+- [ ] Let's be able to select between types of relationships shown
+- [ ] Let's be able to add filters to what's shown, in a queue type structure
+- [ ] Create a dictionary of file sizes
+- [ ] Do some operations on index
 
-
-
-
-// Return all modules that fufill certain regex (true/false to invert)
-modules = getModulesByNameFilter(moduleSet, regexOnNames, boolean)
-
-// Return all moduels whose reasons fufill a certain regex (true/false to invert)
-modules = getModulesByReasonFilter(moduleSet, regexOnReasons, boolean)
-
-getNameFromModule(module)
-getReasons(module)
-getNameFomReason(reason)
-
-// How do we start scoring complexity?
-
-// To get what needs to the module
-modules = getDependants(module)
-// To get what the module needs
-modules = getDependencies(moduleSet, module)
-
-// This can take an array, create a dictionary of unique values with their counts.
-// The filter can be applied to an array before it is counted, it can be used to group
-countNames(array_of_names, filter)
-resolveNames(working directory, names) (names can be array or dictionary)
-
-MeasureTangledness
-
-
-
-1) Get a group of modules in a certain folder
-2) Get each modules list of dependants (as modules)
-3) Order by dependent
-4) Order who has the most dependants and their number
-5) Create unique list of dependents among all
-6) Eliminate intradependencies of that folder
-7) Look at it by group of different folds
-8) Do for specific players w/in that group
-9) Look for mutual dependencies
-
-1) Get a group of modules in a certain folder
-2) Get for each module a list of their dependencies
-3) Order by who has the most dependencies
-4) Create unique list of dependencies among all
-5) Eliminate intradependencies
-6) Look at dependencies by group of different folders
-
-1) Resolve particular file
-2) Count exports
-3) What does do certain dependents lean on
+-- Health- are there types we didn't check for
+-- Do we have all modules, do all modules have a relationship
+-- What happens if we chunk
+-- Diff Trees
+-- Serialize Trees
+-- Get Our Own Resolver

@@ -50,7 +50,7 @@ export class NodeElement extends HTMLElement {
     toggleVis():void {
         const container: HTMLElement = this.querySelector(".node-container")!;
         const description: HTMLElement = this.querySelector(".description")!;
-        if (container.style.display == "none") {
+        if (this.classList.contains("closed")) {
             container.style.display = "flex";
             description.style.display = "table";
         } else {
@@ -107,6 +107,7 @@ export function oneValue(value: string, size: string) {
     const newNode: NodeElement = createNodeSingleValue(value);
     newNode.style.fontSize = size;
     newNode.addNodeToContainer(root);
+    newNode.toggleVis();
 }
 
 export function clearTree() {

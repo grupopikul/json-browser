@@ -18,8 +18,8 @@ So since this is turning into a build system....
 
 ## TODO
 
-- [ ] fix build
-- [ ] fix source maps
+- [x] fix build
+- [x] fix source maps
 - [ ] better interface for webpack?
 - [ ] plotly (fix documentation on refactor)
 - [ ] Get cytoscape running with DAGRE

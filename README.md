@@ -21,7 +21,7 @@ So since this is turning into a build system....
 - [x] fix build
 - [x] fix source maps
 - [x] better interface for webpack?
-- [ ] plotly (fix documentation on refactor)
+- [x] plotly (fix documentation on refactor)
 - [ ] Get cytoscape running with DAGRE
 - [ ] Get it into global
 - [ ] Let's redo the toolbar
@@ -29,7 +29,7 @@ So since this is turning into a build system....
   - [ ] Get it fixed and working
   - [ ] Split it into modules
   - [ ] Create tabs, yeah
-  - [ ] better defaults for namespaces
+  - [x] better defaults for namespaces
 - [ ] Let's keep going with webpack- turn webpack into Class please
 - [ ] Let's lint
 - [ ] Trees/Looping/Sorting (Graph should be tree)

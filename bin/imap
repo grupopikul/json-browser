@@ -1,0 +1,99 @@
+#!/usr/bin/zsh
+
+# Takes a file name or URL as an argument, asks you some questions and outputs an input map.
+# Note! won't find import()! I don't know if ESM resolves those the same
+
+SED_REGEX='s/import\s\b.*\b\sfrom\s['\'\"'](.*)['\'\"'];?/\1/p'
+
+# Defaults
+URL=()
+FILE=()
+HTML=true
+
+## USAGE HELP
+usage=(
+  "imap [-h|--h]"
+  "imap [--no-html] [-f|--file] FILE"
+  "imap [--no-html] [-u|--url] URL"
+
+  "-u and -f can be specified multiple times"
+  "--no-html outputs just the json, no <script> tags"
+)
+## PROCESS FLAGS
+
+while (( $# )); do
+  case $1 in
+    -h|--help)      printf "%s\n" $usage; return  ;;
+    -u|--url)       shift; URL+="$1"              ;;
+    -f|--file)      shift; FILE+="$1"             ;;
+    --no-html)      HTML=false                    ;;
+    *)              printf "%s\n" $usage; return  ;;
+  esac
+  shift
+done
+
+# array of file and url
+# dictionary of map
+declare -A mapmap
+
+# could use zle-line-init/finish to change how display occurs
+blue='\033[0;34m'
+nc='\033[0m'
+# prevents jitter
+export tmp
+for file in $FILE; do
+  lines=($(sed -nr $SED_REGEX $file))
+  echo "Reading: $file"
+  echo "" # move down a line
+  echo -ne "\033[F" # move up a line
+  for line in $lines; do
+    [[ ! -z $mapmap[$line] ]] && continue
+    vared -p "$line: ? (empty for as is): " tmp
+    if [[ -z "$tmp" ]]; then
+      mapmap[$line]="$line"
+    else
+      mapmap[$line]="$tmp"
+    fi
+    tmp=""
+    echo -ne "\033[F" # up a line
+    echo -ne "\033[2K" # clears the line
+  done
+  echo -ne "\033[F" # up a line
+  echo -ne "\033[2K" # clears the line
+done
+
+for url in $URL; do
+  echo "Reading: $url"
+  lines=($(wget -q - $url | sed -nr $SED_REGEX $file))
+  echo "" # move down a line
+  echo -ne "\033[F" # move up a line
+  for line in $lines; do
+    [[ ! -z $mapmap[$line] ]] && continue
+    vared -p "$line: ? (empty for as is): " tmp
+    if [[ -z "$tmp" ]]; then
+      mapmap[$line]="$line"
+    else
+      mapmap[$line]="$tmp"
+    fi
+    tmp=""
+    echo -ne "\033[F" # up a line
+    echo -ne "\033[2K" # clears the line
+  done
+  echo -ne "\033[F" # up a line
+  echo -ne "\033[2K" # clears the line
+done
+
+IND=""
+$HTML && IND="\t"
+$HTML && printf '<script type="importmap">\n'
+printf "$IND"
+printf '{\n'
+printf "$IND"
+printf '\t"imports": {\n'
+printf "$IND"
+printf '\t\t"%s": "%s",\n' ${(kv)mapmap}
+printf "$IND"
+printf '\t}\n'
+printf "$IND"
+printf '}\n'
+$HTML && printf '</script>\n'

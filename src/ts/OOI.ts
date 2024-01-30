@@ -31,7 +31,8 @@ export default class OOI {
         if(maybeLiteral) dom.oneValue(maybeLiteral, "200px")
         else {
             dom.clearTree();
-            this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement);
+            const newNode: dom.NodeElement = this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement, this.filename);
+            newNode.toggleVis();
         }
     }
     rerender(): void {
@@ -43,7 +44,8 @@ export default class OOI {
         if(maybeLiteral) dom.oneValue(maybeLiteral, "200px");
         else {
             dom.clearTree();
-            this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement);
+            const newNode: dom.NodeElement = this.parseObject(this.object, document.getElementsByClassName("root")[0] as HTMLElement, this.filename);
+            newNode.toggleVis();
         }
     }
 
@@ -65,7 +67,7 @@ export default class OOI {
         if(Array.isArray(obj)) return true;
     }
     // Create three parse functions, parseObject, parseArray, parseLiterally
-    parseObject(obj: any, container: HTMLElement, title?: string): void {
+    parseObject(obj: any, container: HTMLElement, title?: string): dom.NodeElement {
         // I choose to use any here because that is what JSON returns
         // and I don't know what is coming in.
         const newNode: dom.NodeElement = new dom.NodeElement(this.newId());
@@ -86,6 +88,7 @@ export default class OOI {
             }
 
         }
+        return newNode;
     }
 
     newId() {

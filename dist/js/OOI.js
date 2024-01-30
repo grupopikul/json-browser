@@ -22,7 +22,8 @@ export default class OOI {
             dom.oneValue(maybeLiteral, "200px");
         else {
             dom.clearTree();
-            this.parseObject(this.object, document.getElementsByClassName("root")[0]);
+            const newNode = this.parseObject(this.object, document.getElementsByClassName("root")[0], this.filename);
+            newNode.toggleVis();
         }
     }
     rerender() {
@@ -35,7 +36,8 @@ export default class OOI {
             dom.oneValue(maybeLiteral, "200px");
         else {
             dom.clearTree();
-            this.parseObject(this.object, document.getElementsByClassName("root")[0]);
+            const newNode = this.parseObject(this.object, document.getElementsByClassName("root")[0], this.filename);
+            newNode.toggleVis();
         }
     }
     checkLiteral(obj) {
@@ -85,6 +87,7 @@ export default class OOI {
                 this.parseObject(value, newNode.getContainerFromNode(), newTitle);
             }
         }
+        return newNode;
     }
     newId() {
         var id = crypto.randomUUID().split('-')[0];

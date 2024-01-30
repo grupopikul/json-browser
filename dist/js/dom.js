@@ -103,6 +103,7 @@ export function oneValue(value, size) {
     const newNode = createNodeSingleValue(value);
     newNode.style.fontSize = size;
     newNode.addNodeToContainer(root);
+    newNode.toggleVis();
 }
 export function clearTree() {
     const root = document.getElementsByClassName("root")[0];

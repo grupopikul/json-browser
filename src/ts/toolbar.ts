@@ -26,6 +26,7 @@ window.json_browser = new Object();
 window.json_browser.objects = objs;
 window.json_browser.currentIndex = currentObject;
 window.json_browser.get_obj = get_obj;
+window.json_browser.get_tuple = get_tuple;
 // Switch needs to actually switch
 // Need to deal with arrays
 // Need to be able to switch between existing objects

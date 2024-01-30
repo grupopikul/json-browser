@@ -17,7 +17,7 @@ export default class OOI {
     rerender(): void;
     checkLiteral(obj: any): string | null;
     isArray(obj: any): true | undefined;
-    parseObject(obj: any, container: HTMLElement, title?: string): void;
+    parseObject(obj: any, container: HTMLElement, title?: string): dom.NodeElement;
     newId(): string;
     updateNamespace(namespace: string): void;
 }

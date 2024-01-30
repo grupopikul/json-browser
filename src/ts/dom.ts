@@ -107,6 +107,7 @@ export function oneValue(value: string, size: string) {
     const newNode: NodeElement = createNodeSingleValue(value);
     newNode.style.fontSize = size;
     newNode.addNodeToContainer(root);
+    newNode.toggleVis();
 }
 
 export function clearTree() {

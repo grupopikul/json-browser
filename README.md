@@ -20,7 +20,7 @@ So since this is turning into a build system....
 
 - [x] fix build
 - [x] fix source maps
-- [ ] better interface for webpack?
+- [x] better interface for webpack?
 - [ ] plotly (fix documentation on refactor)
 - [ ] Get cytoscape running with DAGRE
 - [ ] Get it into global
@@ -30,7 +30,7 @@ So since this is turning into a build system....
   - [ ] Split it into modules
   - [ ] Create tabs, yeah
   - [ ] better defaults for namespaces
-- [ ] Let's keep going with webpack
+- [ ] Let's keep going with webpack- turn webpack into Class please
 - [ ] Let's lint
 - [ ] Trees/Looping/Sorting (Graph should be tree)
 - [ ] Let's create that tree of all the files

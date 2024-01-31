@@ -1,5 +1,7 @@
 So since this is turning into a build system....
 
+There is a tool in here for extracting imports.
+
 ## Concept
 
 1) [ ] Take entry files
@@ -23,6 +25,16 @@ So since this is turning into a build system....
 - [x] better interface for webpack?
 - [x] plotly (fix documentation on refactor)
 - [ ] Get cytoscape running with DAGRE
+  - [x] Get exports working on heap
+  - [x] Fix package.json
+  - [x] Get tests working on heap
+  - [x] See if import works
+  - [x] See if require works
+  - [x] Make fork
+  - [x] Make pull request
+  - [x] Make issue on cytoscape (explain)
+  - [ ] Document the import tool, document the changes to both cytoscape and
+- [ ] Can plotly be exported/imported?
 - [ ] Get it into global
 - [ ] Let's redo the toolbar
   - [ ] Let's get certain things split into modules
@@ -48,3 +60,13 @@ So since this is turning into a build system....
 -- Diff Trees
 -- Serialize Trees
 -- Get Our Own Resolver
+
+# Errata
+
+I'm only using ESM,
+
+I had to submit a request to `heap` to update for ESM, but I'm using it locally right now.
+
+I'm using a slightly modified version of cytoscape to make the actual pulls easier.
+
+there is a "modified" folder with `// CHANGE` markers.

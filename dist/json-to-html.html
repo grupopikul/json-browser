@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
   <head>
-    <script src="js/main/main.js" type="module"></script>
-    <script src="js/webpack.js"></script>
-    <!--script src="js/mycy.js" type="module"></script-->
+    <script type="importmap">
+      {
+        "imports": {
+          "lodash":"https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/lodash.min.js",
+          "heap": "./js/vendor/heap.mjs"
+        }
+      }
+    </script>
+    <!--script src="js/main/main.js" type="module"></script-->
+    <!--script src="js/webpack.js"></script-->
+    <script src="js/vendor/cytoscape.esm.js" type="module"></script>
     <link rel=stylesheet href="css/style.css" />
   </head>
   <body>

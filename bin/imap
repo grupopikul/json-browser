@@ -64,7 +64,7 @@ done
 
 for url in $URL; do
   echo "Reading: $url"
-  lines=($(wget -q - $url | sed -nr $SED_REGEX $file))
+  lines=($(sed -nr $SED_REGEX <( (wget -q -O - $url))))
   echo "" # move down a line
   echo -ne "\033[F" # move up a line
   for line in $lines; do
@@ -90,7 +90,7 @@ printf "$IND"
 printf '{\n'
 printf "$IND"
 printf '\t"imports": {\n'
-printf "$IND"
+printf "$IND" #doesn't work, obviously
 printf '\t\t"%s": "%s",\n' ${(kv)mapmap}
 printf "$IND"
 printf '\t}\n'

@@ -20,11 +20,11 @@
  * SOFTWARE.
  */
 
-import debounce from 'lodash/debounce';
-import Heap from 'heap';
-import get from 'lodash/get';
-import set from 'lodash/set';
-import toPath from 'lodash/toPath';
+import { default as Heap } from 'heap';
+import { debounce } from 'lodash';
+import { get } from 'lodash';
+import { set } from 'lodash';
+import { toPath } from 'lodash';
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -5876,7 +5876,7 @@ var define$2 = {
       // .data('foo', ...)
       if (string(name)) {
         // set or get property
-        var isPathLike = name.indexOf('.') !== -1; // there might be a normal field with a dot 
+        var isPathLike = name.indexOf('.') !== -1; // there might be a normal field with a dot
         var path = isPathLike && toPath(name);
 
         // .data('foo')
@@ -17446,7 +17446,7 @@ var defaults$6 = {
   // callback on layoutstop
   transform: function transform(node, position) {
     return position;
-  } // transform a given node position. Useful for changing flow direction in discrete layouts 
+  } // transform a given node position. Useful for changing flow direction in discrete layouts
 };
 
 function CircleLayout(options) {
@@ -18213,7 +18213,7 @@ var findLCA_aux = function findLCA_aux(node1, node2, graphIx, layoutInfo) {
  * @brief: printsLayoutInfo into js console
  *         Only used for debbuging
  */
-var printLayoutInfo; 
+var printLayoutInfo;
 
 /**
  * @brief : Randomizes the position of all nodes
@@ -18943,7 +18943,7 @@ var defaults$3 = {
   // callback on layoutstop
   transform: function transform(node, position) {
     return position;
-  } // transform a given node position. Useful for changing flow direction in discrete layouts 
+  } // transform a given node position. Useful for changing flow direction in discrete layouts
 };
 
 function GridLayout(options) {
@@ -19281,7 +19281,7 @@ var defaults = {
   // callback on layoutstop
   transform: function transform(node, position) {
     return position;
-  } // transform a given node position. Useful for changing flow direction in discrete layouts 
+  } // transform a given node position. Useful for changing flow direction in discrete layouts
 };
 
 function RandomLayout(options) {
@@ -21873,7 +21873,7 @@ BRp$4.getCachedImage = function (url, crossOrigin, onLoad) {
     var dataUriPrefix = 'data:';
     var isDataUri = url.substring(0, dataUriPrefix.length).toLowerCase() === dataUriPrefix;
     if (!isDataUri) {
-      // if crossorigin is 'null'(stringified), then manually set it to null 
+      // if crossorigin is 'null'(stringified), then manually set it to null
       crossOrigin = crossOrigin === 'null' ? null : crossOrigin;
       image.crossOrigin = crossOrigin; // prevent tainted canvas
     }
@@ -27079,7 +27079,7 @@ CRp$5.drawNode = function (context, node, shiftToOriginWithBb) {
         _path = outlinePath.path;
       }
 
-      // draw the outline path, either by using expanded points or by scaling 
+      // draw the outline path, either by using expanded points or by scaling
       // the dimensions, depending on shape
       if (shape === "ellipse") {
         r.drawEllipsePath(_path || context, npos.x, npos.y, sWidth, sHeight);

@@ -4,7 +4,15 @@ There is a tool in here for extracting imports.
 
 ## Concept
 
-1) [ ] Take entry files
+// can we move import to require w/ transpilation, slowly
+// can cjs be imported in browser and node if it's named properly?
+// or is it just a node thing?
+// lets try all situations
+// but there are also rules about who THEY import (create things that export, that's the start, create things that import, and then things in between, and run time tests!
+// parameterize...... try except can work for cjs, not gonna work for the other tone, gonna have to be a bunch of separate files, or modifiable files. and we still have to create a bunch of exports. gotta do it for both.
+// and that's not a question of what the bundlers can do. if we're importing something we mean to be async but is not, we can wrap it all.
+
+1) Take entry files
 2) Move the AST
 3) Develop dependency tree
 4) Lint
@@ -24,7 +32,7 @@ There is a tool in here for extracting imports.
 - [x] fix source maps
 - [x] better interface for webpack?
 - [x] plotly (fix documentation on refactor)
-- [ ] Get cytoscape running with DAGRE
+- [x] Get cytoscape running with DAGRE
   - [x] Get exports working on heap
   - [x] Fix package.json
   - [x] Get tests working on heap
@@ -33,7 +41,7 @@ There is a tool in here for extracting imports.
   - [x] Make fork
   - [x] Make pull request
   - [x] Make issue on cytoscape (explain)
-  - [ ] Document the import tool, document the changes to both cytoscape and
+  - [x] Document the import tool, document the changes to both cytoscape and
 - [ ] Can plotly be exported/imported?
 - [ ] Get it into global
 - [ ] Let's redo the toolbar
@@ -41,7 +49,7 @@ There is a tool in here for extracting imports.
   - [ ] Get it fixed and working
   - [ ] Split it into modules
   - [ ] Create tabs, yeah
-  - [x] better defaults for namespaces
+  - [ ] better defaults for namespaces
 - [ ] Let's keep going with webpack- turn webpack into Class please
 - [ ] Let's lint
 - [ ] Trees/Looping/Sorting (Graph should be tree)

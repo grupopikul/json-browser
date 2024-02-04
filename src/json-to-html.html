@@ -4,14 +4,18 @@
     <script type="importmap">
       {
         "imports": {
-          "lodash":"https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/lodash.min.js",
-          "heap": "./js/vendor/heap.mjs"
+          "cytoscape": "./js/vendor/modified/cytoscape.esm.js",
+          "cytoscape-dagger": "./js/vendor/modified/cytoscape.esm.js"
         }
       }
     </script>
     <!--script src="js/main/main.js" type="module"></script-->
     <!--script src="js/webpack.js"></script-->
-    <script src="js/vendor/modified/cytoscape.esm.js" type="module"></script>
+    <script type="module">
+      import { default as cytoscape } from "cytoscape";
+      import { default as dagre } from "cytoscape-dagger";
+      cytoscape.use(dagre); // Notice this is explicitly called with ESM-style, just like nodejs.
+    </script>
     <link rel=stylesheet href="css/style.css" />
   </head>
   <body>

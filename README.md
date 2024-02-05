@@ -104,15 +104,22 @@ Why can't we just follow the errors? Try to import index.js with firefox and tak
       - [x] Push
     - [x] Separate matrix into matrix range
   - [x] Get pull on lasio
-  - [ ] submit pull request on cytoscape to roll everything into non-min
-    - [ ] test to make sure it works without other imports
-  - [ ] publish what you wrote to ajpikul or what
+  - [x] submit pull request on cytoscape to roll everything into non-min
+    - [x] test to make sure it works without other imports
+  - [x] publish what you wrote to ajpikul or what
   - [x] if dagre gets submitted, see if you still need a special loader
-  - [ ] migration (check again)
-  - [ ] derma (make list of options)
-  - [ ] Package (call them or talk to them)
-- [ ] How is plotly using browserfy
-- [ ] Fixup cytoscape in json-browser- as in, figure out what versions you're going to use and how you're going to use them.
+  - [x] migration (check again)
+  - [x] derma (make list of options)
+  - [x] Package (call them or talk to them)
+- [x] How is plotly using browserfy
+- [x] TODO in slack for neyberson, as opposed to Trello, add notes that you have in notebook
+- [x] Fixup cytoscape in json-browser- as in, figure out what versions you're going to use and how you're going to use them.
+- [x] make coffee
+- [x] try to log in to western union again
+- [x] try to attach your account and send urself money
+- [x] see about western union
+- [x] get milk
+- [x] do derma
 - [ ] Let's redo the toolbar
   - [ ] It needs to be better organized, it needs to be better compartmentalized
     - [ ] Tabs for windows (separate toolbar for apps?, and command window, and console)
@@ -133,7 +140,6 @@ Why can't we just follow the errors? Try to import index.js with firefox and tak
 - [ ] Create a dictionary of file sizes
 - [x] Add to plotly unidades and multiple lines, add to pozo better checking for types
 - [ ] Do some operations on index.js
-- [ ] TODO in slack for neyberson, as opposed to Trello, add notes that you have in notebook
 - [ ] npm install --web or something like that to make an import map
 
 -- Health- are there types we didn't check for (make sure nothing is under the table)

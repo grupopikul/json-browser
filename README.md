@@ -126,6 +126,7 @@ Why can't we just follow the errors? Try to import index.js with firefox and tak
     - [ ] Into modules you can initialized
     - [ ] Make it work
     - [ ] better defaults for namespaces
+- [x] Talk to Thomas
 - [ ] Let's keep going with webpack- turn webpack reader into into report Class please
 - [ ] Let's get the reports pretty printed
 - [ ] Let's get notified in track? I have no idea what that meant

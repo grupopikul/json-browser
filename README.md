@@ -122,7 +122,8 @@ Why can't we just follow the errors? Try to import index.js with firefox and tak
 - [x] do derma
 - [ ] Let's redo the toolbar
   - [ ] It needs to be better organized, it needs to be better compartmentalized
-    - [ ] Tabs for windows (separate toolbar for apps?, and command window, and console)
+    - [x] Tabs for windows (separate toolbar for apps?, and command window, and console)
+    - [ ] Some kind of toolbar app (maybe try a model on key capture)
     - [ ] Into modules you can initialized
     - [ ] Make it work
     - [ ] better defaults for namespaces

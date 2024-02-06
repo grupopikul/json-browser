@@ -1,0 +1,37 @@
+.wm-window {
+  display: none;
+}
+
+.wm-window.active {
+  display: block;
+}
+
+.wm-launcher {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  padding: 0px;
+  margin: 0px;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.wm-launcher li {
+  display: inline-block;
+  border: 1px dotted black;
+  font-size: 15px;
+  width: 15px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+
+}
+
+.wm-launcher li:hover {
+  border: 1px dashed black;
+  border-top: 2px dashed black;
+}
+
+.wm-launcher li.active {
+  border: 1px solid black;
+}

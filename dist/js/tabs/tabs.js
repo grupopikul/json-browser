@@ -1,4 +1,6 @@
 // Adapt this to something AppManager which is like this but without add etc.
+const launcher_class = "wm-launcher";
+const window_class = "wm-window";
 export default class WindowManager {
     constructor(parentWindow = document.body, launcherParent = document.body) {
         // windowList items
@@ -21,33 +23,47 @@ export default class WindowManager {
         this.parentWindow = parentWindow;
         this.launcherParent = launcherParent;
         this.launcher = document.createElement("ul");
+        this.launcher.className = launcher_class;
         this.launcherParent.appendChild(this.launcher);
     }
     new_window(elementType = "div", loader = true) {
         let newWindow = document.createElement(elementType);
+        newWindow.className = window_class;
         if (loader) {
             newWindow.innerHTML = "loading...";
         }
         // Handle windowList
-        if (this.activeWindow === null)
-            this.activeWindow = 0;
-        else
-            this.activeWindow = this.windowList.length;
+        let windowNumber = this.windowList.length;
         this.windowList.push(newWindow);
         this.parentWindow.appendChild(newWindow);
         let newIcon = document.createElement('li');
-        newIcon.innerHTML = (this.activeWindow + 1).toString();
+        newIcon.innerHTML = (this.windowList.length).toString(); // This will always be + 1, good.
+        const cb = function (event) {
+            this.switch_window(+event.currentTarget.innerHTML - 1);
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        newIcon.addEventListener('click', cb.bind(this));
         this.launcher.appendChild(newIcon);
         return newWindow;
     }
     close_window() {
-        // remove item from windowList
-        // remove item from LauncherParent
-        // remove item from parentWindow
-        // switch the window
+        // unimplemented
     }
-    switch_window() {
-        // just turn a different item on
+    switch_window(which) {
+        if (which >= this.windowList.length)
+            throw new Error("Can't switch to window that doesn't exist");
+        if (which === this.activeWindow)
+            return;
+        let icons = this.launcher.querySelectorAll("li");
+        if (this.activeWindow !== null) {
+            this.windowList[this.activeWindow].classList.remove("active");
+            icons[this.activeWindow].classList.remove("active");
+        }
+        this.activeWindow = which;
+        this.windowList[this.activeWindow].classList.add("active");
+        icons[this.activeWindow].classList.add("active");
+        return;
     }
     set_loader() {
         // this calls a loading window

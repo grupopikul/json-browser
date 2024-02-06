@@ -17,9 +17,11 @@
       cytoscape.use(dagre); // Notice this is explicitly called with ESM-style, just like nodejs.
     </script-->
     <!--link rel=stylesheet href="css/style.css" /-->
+    <link rel=stylesheet href="css/wm-style.css" />
     <script type="module">
       import WindowManager from "./js/tabs/tabs.js";
       let wm = new WindowManager();
+      window.wm = wm;
       let w1 = wm.new_window();
       let w2 = wm.new_window();
       let w3 = wm.new_window();

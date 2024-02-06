@@ -7,6 +7,6 @@ export default class WindowManager {
     constructor(parentWindow?: string | HTMLElement, launcherParent?: string | HTMLElement);
     new_window(elementType?: string, loader?: boolean): HTMLElement;
     close_window(): void;
-    switch_window(): void;
+    switch_window(which: number): void;
     set_loader(): void;
 }

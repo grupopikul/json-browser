@@ -11,32 +11,24 @@
     </script>
     <!--script src="js/main/main.js" type="module"></script-->
     <!--script src="js/webpack.js"></script-->
-    <script type="module">
+    <!--script type="module">
       import { default as cytoscape } from "cytoscape";
       import { default as dagre } from "cytoscape-dagger";
       cytoscape.use(dagre); // Notice this is explicitly called with ESM-style, just like nodejs.
+    </script-->
+    <!--link rel=stylesheet href="css/style.css" /-->
+    <script type="module">
+      import WindowManager from "./js/tabs/tabs.js";
+      let wm = new WindowManager();
+      let w1 = wm.new_window();
+      let w2 = wm.new_window();
+      let w3 = wm.new_window();
+      w1.innerHTML = "w1";
+      w2.innerHTML = "w2";
+      w3.innerHTML = "w3";
     </script>
-    <link rel=stylesheet href="css/style.css" />
   </head>
   <body>
-    <div id="expander" style="display:block">
-      <div class="root node-container">
-        <div id="toolbar">
-          Current Object: <span id="current-object">None</span> Current Private Namespace: <span id="current-namespace">None</span>
-          <br />
-          Fix Description Width:
-          <input type=text size=3 id="fix-width-input" value="150" />
-          <button id="fix-width">Fix Width</button>
-          <button id="unfix-width">Unfix width</button>
-          | Pick (or drag) a JSON: <input type="file" id="file-selector" accept=".json" style="width: 70px">
-          | Namespace: <input type=text size=5 id="namespace-input" />: "_<span id="namespace-preview"></span>"
-          <button id="update-namespace">Set</button>
-          | Object: <select id="select-object" style="width: 70px"></select>
-          | Schema: JSON <button id="rerender">Rerender</button>
-        </div>
-      </div>
-    </div>
-    <div id="cy" style="border: 1px solid black; width:90vw; height:90vh; margin: 0 auto 10px auto"></div>
   </body>
 </html>
 

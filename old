@@ -1,0 +1,17 @@
+    <div id="cy" style="border: 1px solid black; width:90vw; height:90vh; margin: 0 auto 10px auto"></div>
+
+      <div class="root node-container">
+        <div id="toolbar">
+          Current Object: <span id="current-object">None</span> Current Private Namespace: <span id="current-namespace">None</span>
+          <br />
+          Fix Description Width:
+          <input type=text size=3 id="fix-width-input" value="150" />
+          <button id="fix-width">Fix Width</button>
+          <button id="unfix-width">Unfix width</button>
+          | Pick (or drag) a JSON: <input type="file" id="file-selector" accept=".json" style="width: 70px">
+          | Namespace: <input type=text size=5 id="namespace-input" />: "_<span id="namespace-preview"></span>"
+          <button id="update-namespace">Set</button>
+          | Object: <select id="select-object" style="width: 70px"></select>
+          | Schema: JSON <button id="rerender">Rerender</button>
+        </div>
+      </div>

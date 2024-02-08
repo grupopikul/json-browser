@@ -20,14 +20,19 @@
     <link rel=stylesheet href="css/wm-style.css" />
     <script type="module">
       import WindowManager from "./js/tabs/tabs.js";
-      let wm = new WindowManager();
-      window.wm = wm;
+
+      let wm = window.wm = new WindowManager();
+
+
       let w1 = wm.new_window();
-      let w2 = wm.new_window();
-      let w3 = wm.new_window();
       w1.innerHTML = "w1";
+
+      let w2 = wm.new_window();
       w2.innerHTML = "w2";
+
+      let w3 = wm.new_window();
       w3.innerHTML = "w3";
+
     </script>
   </head>
   <body>

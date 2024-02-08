@@ -13,6 +13,28 @@ export default class WindowManager {
   windowList: Array<HTMLElement> = [];
   activeWindow: number | null = null;
 
+  _new_launcher_el(): HTMLElement {
+    let el: HTMLElement = document.createElement("ul");
+    el.className = launcher_class;
+    return el;
+  }
+
+  _new_window_el(elementType: string): HTMLElement {
+    let el: HTMLElement = document.createElement(elementType);
+    el.className = window_class;
+    return el;
+  }
+
+  _new_launcher_item_el(): HTMLElement {
+    let el: HTMLElement = document.createElement("li");
+    return el;
+  }
+
+  // So, the idea here is that only styling is pulled out of normal flow.
+  // The script can set dataset, innerhtml if it wants to.
+  // It would probably at some pont make more sense to inherit a different object.
+  // Probably should overload the attach function too
+
   constructor(parentWindow: string | HTMLElement = document.body, launcherParent: string | HTMLElement = document.body) {
     if(typeof parentWindow === "string") {
       let tempElement: Element | null = document.querySelector(parentWindow);
@@ -29,18 +51,17 @@ export default class WindowManager {
     this.parentWindow = parentWindow;
     this.launcherParent = launcherParent;
 
-    this.launcher = document.createElement("ul");
-    this.launcher.className = launcher_class;
+    this.launcher = this._new_launcher_el();
     this.launcherParent.appendChild(this.launcher);
 
   }
 
-  new_window(input: { elementType?: string, loader?: boolean, name?: string}): HTMLElement {
+  new_window(input: { elementType?: string, loader?: boolean, name?: string} = {}): HTMLElement {
     let elementType: string = input.elementType ?? "div";
     let loader: boolean = input.loader ?? true;
     let name: string | null = input.name ?? null;
-    let newWindow: HTMLElement = document.createElement(elementType);
-    newWindow.className = window_class;
+
+    let newWindow: HTMLElement = this._new_window_el(elementType);
     if(loader) {
       newWindow.innerHTML = "loading...";
     }
@@ -50,7 +71,7 @@ export default class WindowManager {
     this.windowList.push(newWindow);
     this.parentWindow.appendChild(newWindow);
 
-    let newIcon : HTMLElement = document.createElement('li');
+    let newIcon : HTMLElement = this._new_launcher_item_el();
     if(name === null) name = (windowNumber+1).toString();
     newIcon.innerHTML = name;
     newIcon.dataset.windowNumber = windowNumber.toString();
@@ -85,7 +106,4 @@ export default class WindowManager {
     return;
   }
 
-  set_loader() {
-    // this calls a loading window
-  }
 }

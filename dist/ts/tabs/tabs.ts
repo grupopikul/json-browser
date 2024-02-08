@@ -13,6 +13,27 @@ export default class WindowManager {
   windowList: Array<HTMLElement> = [];
   activeWindow: number | null = null;
 
+  _new_launcher_el(): HTMLElement {
+    let el: HTMLElement = document.createElement("ul");
+    el.className = launcher_class;
+    return el;
+  }
+
+  _new_window_el(elementType: string): HTMLElement {
+    let el: HTMLElement = document.createElement(elementType);
+    el.className = window_class;
+    return el;
+  }
+
+  _new_launcher_item_el(): HTMLElement {
+    let el: HTMLElement = document.createElement("li");
+    return el;
+  }
+
+  // So, the idea here is that only styling is pulled out of normal flow.
+  // The script can set dataset, innerhtml if it wants to.
+  // It would probably at some pont make more sense to inherit a different object.
+
   constructor(parentWindow: string | HTMLElement = document.body, launcherParent: string | HTMLElement = document.body) {
     if(typeof parentWindow === "string") {
       let tempElement: Element | null = document.querySelector(parentWindow);
@@ -29,15 +50,17 @@ export default class WindowManager {
     this.parentWindow = parentWindow;
     this.launcherParent = launcherParent;
 
-    this.launcher = document.createElement("ul");
-    this.launcher.className = launcher_class;
+    this.launcher = this._new_launcher_el();
     this.launcherParent.appendChild(this.launcher);
 
   }
 
-  new_window(elementType: string = "div", loader: boolean = true): HTMLElement {
-    let newWindow: HTMLElement = document.createElement(elementType);
-    newWindow.className = window_class;
+  new_window(input: { elementType?: string, loader?: boolean, name?: string} = {}): HTMLElement {
+    let elementType: string = input.elementType ?? "div";
+    let loader: boolean = input.loader ?? true;
+    let name: string | null = input.name ?? null;
+
+    let newWindow: HTMLElement = this._new_window_el(elementType);
     if(loader) {
       newWindow.innerHTML = "loading...";
     }
@@ -47,10 +70,13 @@ export default class WindowManager {
     this.windowList.push(newWindow);
     this.parentWindow.appendChild(newWindow);
 
-    let newIcon : HTMLElement = document.createElement('li');
-    newIcon.innerHTML = (this.windowList.length).toString(); // This will always be + 1, good.
+    let newIcon : HTMLElement = this._new_launcher_item_el();
+    if(name === null) name = (windowNumber+1).toString();
+    newIcon.innerHTML = name;
+    newIcon.dataset.windowNumber = windowNumber.toString();
+
     const cb: (this: WindowManager, arg0: Event) => void = function(event: Event) {
-      this.switch_window(+(event.currentTarget as HTMLElement).innerHTML - 1);
+      this.switch_window(+(event.currentTarget as HTMLElement).dataset.windowNumber!);
       event.preventDefault();
       event.stopPropagation();
     };

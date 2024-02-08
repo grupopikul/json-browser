@@ -2,6 +2,24 @@
 const launcher_class = "wm-launcher";
 const window_class = "wm-window";
 export default class WindowManager {
+    _new_launcher_el() {
+        let el = document.createElement("ul");
+        el.className = launcher_class;
+        return el;
+    }
+    _new_window_el(elementType) {
+        let el = document.createElement(elementType);
+        el.className = window_class;
+        return el;
+    }
+    _new_launcher_item_el() {
+        let el = document.createElement("li");
+        return el;
+    }
+    // So, the idea here is that only styling is pulled out of normal flow.
+    // The script can set dataset, innerhtml if it wants to.
+    // It would probably at some pont make more sense to inherit a different object.
+    // Probably should overload the attach function too
     constructor(parentWindow = document.body, launcherParent = document.body) {
         // windowList items
         this.windowList = [];
@@ -22,17 +40,15 @@ export default class WindowManager {
         }
         this.parentWindow = parentWindow;
         this.launcherParent = launcherParent;
-        this.launcher = document.createElement("ul");
-        this.launcher.className = launcher_class;
+        this.launcher = this._new_launcher_el();
         this.launcherParent.appendChild(this.launcher);
     }
-    new_window(input) {
+    new_window(input = {}) {
         var _a, _b, _c;
         let elementType = (_a = input.elementType) !== null && _a !== void 0 ? _a : "div";
         let loader = (_b = input.loader) !== null && _b !== void 0 ? _b : true;
         let name = (_c = input.name) !== null && _c !== void 0 ? _c : null;
-        let newWindow = document.createElement(elementType);
-        newWindow.className = window_class;
+        let newWindow = this._new_window_el(elementType);
         if (loader) {
             newWindow.innerHTML = "loading...";
         }
@@ -40,7 +56,7 @@ export default class WindowManager {
         let windowNumber = this.windowList.length;
         this.windowList.push(newWindow);
         this.parentWindow.appendChild(newWindow);
-        let newIcon = document.createElement('li');
+        let newIcon = this._new_launcher_item_el();
         if (name === null)
             name = (windowNumber + 1).toString();
         newIcon.innerHTML = name;
@@ -71,9 +87,6 @@ export default class WindowManager {
         this.windowList[this.activeWindow].classList.add("active");
         icons[this.activeWindow].classList.add("active");
         return;
-    }
-    set_loader() {
-        // this calls a loading window
     }
 }
 //# sourceMappingURL=tabs.js.map

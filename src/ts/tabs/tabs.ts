@@ -35,7 +35,10 @@ export default class WindowManager {
 
   }
 
-  new_window(elementType: string = "div", loader: boolean = true): HTMLElement {
+  new_window(input: { elementType?: string, loader?: boolean, name?: string}): HTMLElement {
+    let elementType: string = input.elementType ?? "div";
+    let loader: boolean = input.loader ?? true;
+    let name: string | null = input.name ?? null;
     let newWindow: HTMLElement = document.createElement(elementType);
     newWindow.className = window_class;
     if(loader) {
@@ -48,9 +51,12 @@ export default class WindowManager {
     this.parentWindow.appendChild(newWindow);
 
     let newIcon : HTMLElement = document.createElement('li');
-    newIcon.innerHTML = (this.windowList.length).toString(); // This will always be + 1, good.
+    if(name === null) name = (windowNumber+1).toString();
+    newIcon.innerHTML = name;
+    newIcon.dataset.windowNumber = windowNumber.toString();
+
     const cb: (this: WindowManager, arg0: Event) => void = function(event: Event) {
-      this.switch_window(+(event.currentTarget as HTMLElement).innerHTML - 1);
+      this.switch_window(+(event.currentTarget as HTMLElement).dataset.windowNumber!);
       event.preventDefault();
       event.stopPropagation();
     };

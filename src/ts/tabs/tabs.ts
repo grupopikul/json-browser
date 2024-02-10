@@ -90,8 +90,8 @@ export default class WindowManager {
   close_window() {
     // unimplemented
   }
-
-  switch_window(which: number): void {
+  // get_active_window
+  switch_window(which: number): void { // Should take HTML element too
     if(which >= this.windowList.length) throw new Error("Can't switch to window that doesn't exist");
     if(which === this.activeWindow) return;
     let icons = this.launcher.querySelectorAll("li");

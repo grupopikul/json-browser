@@ -73,6 +73,7 @@ export default class WindowManager {
     close_window() {
         // unimplemented
     }
+    // get_active_window
     switch_window(which) {
         if (which >= this.windowList.length)
             throw new Error("Can't switch to window that doesn't exist");
